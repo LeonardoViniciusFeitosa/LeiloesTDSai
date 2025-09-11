@@ -24,9 +24,9 @@ public class ProdutosDAO {
     
     public void cadastrarProduto (ProdutosDTO produto){
         String sql = "INSERT INTO produtos(nome, valor, status) VALUES " + "(?,?,?)";
-        conn = new conectaDAO().connectDB();
         
         try{
+        conn = new conectaDAO().connectDB();
         PreparedStatement stmt = this.conn.prepareStatement(sql);
         stmt.setString(1, produto.getNome());
         stmt.setInt(2, produto.getValor());
@@ -36,12 +36,33 @@ public class ProdutosDAO {
         
         }catch(Exception e){
         JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto. ERRO: " + e.getMessage());
-        };
+        }
+        ;
         
     }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
+  
+        String sql = "SELECT * FROM PRODUTOS";
         
+        try{
+        conn = new conectaDAO().connectDB();
+        PreparedStatement stmt = this.conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        
+        while(rs.next()){
+        ProdutosDTO produto = new ProdutosDTO();
+        produto.setId(rs.getInt("id"));
+        produto.setNome(rs.getString("nome"));
+        produto.setValor(rs.getInt("valor"));
+        produto.setStatus(rs.getString("status"));
+        
+        listagem.add(produto);
+        }
+       
+        }catch(Exception e){
+        JOptionPane.showMessageDialog(null, "Erro ao listar produtos. ERRO:" + e.getMessage());
+        }
         return listagem;
     }
     
