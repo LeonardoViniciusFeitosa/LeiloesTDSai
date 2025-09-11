@@ -23,10 +23,20 @@ public class ProdutosDAO {
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
     public void cadastrarProduto (ProdutosDTO produto){
+        String sql = "INSERT INTO produtos(nome, valor, status) VALUES " + "(?,?,?)";
+        conn = new conectaDAO().connectDB();
         
+        try{
+        PreparedStatement stmt = this.conn.prepareStatement(sql);
+        stmt.setString(1, produto.getNome());
+        stmt.setInt(2, produto.getValor());
+        stmt.setString(3, produto.getStatus());
+        stmt.execute();
+        JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
         
-        //conn = new conectaDAO().connectDB();
-        
+        }catch(Exception e){
+        JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto. ERRO: " + e.getMessage());
+        };
         
     }
     
