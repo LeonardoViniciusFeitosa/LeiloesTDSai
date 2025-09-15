@@ -59,12 +59,15 @@ public class ProdutosDAO {
         
         listagem.add(produto);
         }
+        
        
         }catch(Exception e){
         JOptionPane.showMessageDialog(null, "Erro ao listar produtos. ERRO:" + e.getMessage());
         }
         return listagem;
     }
+    
+    
     
     public void venderProduto(int id){
    String sql = "UPDATE produtos SET status = 'vendido' WHERE id = ?";
